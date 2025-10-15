@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mystery At The Library</title>
+    <link rel="icon" href="assets/icon.jpg" />
+</head>
+<body>
+   <h1>The Fantasy Book</h1> 
+   <hr>
+   <h2>The Castle</h2>
+   <p>
+        Find a way to kill the king. <br>
+        Buy the items you need for the fight.<br>
+        Blade = -10 king's hp <br>
+        Granade = -20 king's hp <br>
+        Poison = -10 king's hp <br>
+   </p>
+    <table>
+        <tr>
+            <th>Items</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <th>Blades</th>
+            <td id="blades">0</td>
+            <td>
+                <button type="button" onclick="getMoreBlades()">10 coins</button>
+            </td>
+            <td>
+                <button type="button" onclick="attack('blades',10)">Attack!</button>
+            </td>
+        </tr>
+        <tr>
+            <th>Poison</th>
+            <td id="poisons">0</td>
+            <td>
+                <button type="button" onclick="getMorePoisons()">15 coins</button>
+            </td>
+            <td>
+                <button type="button" onclick="attack('poisons', 10)">Attack!</button>
+            </td>
+        </tr>
+        <tr>
+            <th>Grenades</th>
+            <td id="grenades">0</td>
+            <td>
+                <button type="button" onclick="getMoreGrenades()">20 coins</button>
+            </td>
+            <td>
+                <button type="button" onclick="attack('grenades',20)">Attack!</button>
+            </td>
+        </tr>
+        <tr>
+            <th>Health</th>
+            <td id="health">100</td>
+            <td>
+                <button type="button" onclick="getMoreHealth()">30 coins</button>
+            </td>
+        </tr>
+    </table>
+    <p>Coins <span id="coins">100</span><br></p>
+    <p>King's Health <span id="kings-health">100</span><br></p>
+    <img src="assets/king.jpeg" >
+
+    <script>
+        function getMoreBlades(){
+            getMoreOf('blades', 10, 1);
+        }
+
+        function getMorePoisons(){
+            getMoreOf('poisons', 15, 1);
+        }
+
+        function getMoreGrenades(){
+            getMoreOf('grenades', 20, 1);
+        }
+
+        function getMoreHealth(){
+            getMoreOf('health', 30, 20);
+        }
+
+
+        function getMoreOf(itemId, itemPrice, quantity){
+            let coins = getCoin();
+            if (itemPrice <= coins){
+                let item = document.getElementById(itemId).innerText;
+                document.getElementById(itemId).innerText = (parseInt(item) + quantity);
+                changeCoinText(coins, itemPrice);
+            }
+        }
+
+        function getCoin(){
+            let coins = document.getElementById('coins').innerText;
+            return coins;
+        }
+
+        function changeCoinText(coins, price){
+            document.getElementById('coins').innerText = (coins - price);
+        }
+
+        function attack(weapon, weaponDamage){
+            // Checking if weapon is available 
+            let weaponQuantity = document.getElementById(weapon).innerText;
+            if (weaponQuantity > 0){
+                if (weapon !== 'blades'){
+                    document.getElementById(weapon).innerHTML = weaponQuantity - 1;
+                }
+
+                let playerHealth = document.getElementById('health').innerText;
+                let kingsHealth = document.getElementById('kings-health').innerText;
+                let kingsPower = Math.floor((Math.random() * 10)+ 15);
+
+                let newKingsHealth = parseInt(kingsHealth) - weaponDamage; 
+                let newPlayerHealth = parseInt(playerHealth) - kingsPower;
+            
+                console.log(newKingsHealth);
+                if (newKingsHealth <= 0){
+                    window.location.href = "victory.html?setting=castle&book-type=Fantasy";
+                } else if (newPlayerHealth <= 0) {
+                    window.location.href = "gameover.html?setting=castle&book-type=Fantasy";
+                }  else {
+                    // updating values
+                    document.getElementById('health').innerText = (newPlayerHealth);
+                    document.getElementById('kings-health').innerText = (newKingsHealth);
+                }
+                
+            }
+        }
+    </script>
+</body>
+</html>

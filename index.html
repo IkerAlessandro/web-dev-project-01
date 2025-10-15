@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Mystery At The Library</title>
+    <link rel="icon" href="assets/icon.jpg" />
+  </head>
+  <body>
+    <h1>Mystery At The Library</h1>
+    <img src="assets/library.jpeg" alt="This should be an image" />
+    <p>
+      The library is silent, its towering shelves stretching into the shadows as
+      the moonlight filters weakly through cracked windows. Dust lingers in the
+      air, and every creak of the wooden floor echoes like a whisper of
+      something long forgotten. Before you lies a table scattered with ancient
+      books, their covers worn and titles nearly erased by time.<br />
+      Each book holds a story, but also a secret—your secret. Once you choose
+      and open one, its fate will intertwine with your own, leading you deeper
+      into the mystery that waits in the dark.
+    </p>
+    <form>
+        <fieldset>
+            <legend>Choose the book you want to read:</legend>
+            
+            <input type="radio" name="book-choice" id="history-book" value="history-book"/>
+            <label for="history-book">History Book</label>
+           
+            <input type="radio" name="book-choice" id="fantasy-book" value="fantasy-book"/>
+            <label for="fantasy-book">Fantasy Book</label>
+        </fieldset>
+        <button type="button" onclick="redirectToBook()">Go!</button>
+    </form>
+    <h3>The History Book</h3>
+    <p>
+      The book glows with golden hieroglyphs, opening to a world of endless
+      sands and towering pyramids. Whispers of pharaohs call you forward,
+      promising treasures and secrets hidden deep within the desert's heart.
+    </p>
+    <img src="assets/history-book.jpeg" alt="history book"/>
+    <h3>The Fantasy Book</h3>
+    <p>
+      The pages bloom with emerald light, revealing a forest alive with
+      whispering trees and hidden paths. Somewhere beyond the shadows, a
+      forgotten castle waits, its gates calling you to discover the magic
+      within.
+    </p>
+    <img src="assets/fantasy-book.jpeg" alt="fantasy book"/>
+    <script>
+      function redirectToBook(){
+        let selection = document.querySelector('input[name="book-choice"]:checked')?.value;
+        switch (selection){
+          case "history-book":
+            window.location.href = "history-book.html";
+            break;
+          case "fantasy-book":
+            window.location.href = "fantasy-book.html";
+            break;
+          default:
+            alert("You need to select a book.");
+        }
+      }
+    </script>
+  </body>
+</html>

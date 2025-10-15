@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mystery At The Library</title>
+    <link rel="icon" href="assets/icon.jpg" />
+</head>
+<body>
+    <h1>The History Book</h1>
+    <hr>
+    <h2>The Deserts</h2>
+    <img src="assets/desert-towns.png">
+    <p>Find the map that helps you to find the way home.</p>
+    <table>
+        <tr>
+            <th></th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <th>Water</th>
+            <td><span id="water-value">200</span>ml</td>
+        </tr>
+        <tr>
+            <th>Coins</th>
+            <td id="coins-value">40</td>
+        </tr>
+        <tr>
+            <th>Keys</th>
+            <td id="keys-value">0</td>
+        </tr>
+    </table>
+    <p>
+        Moving from town to town cost you 100ml of water.<br>
+        If you want more water you need to pay 10 coins.<br>
+        If you want know if the twon has the key of the vault containing 
+        the map, you have to pay 5 coins. <br>
+        There is a chance that the town doesn't have a key but you still have to pay to know.
+    </p>
+    <p id="town-alert"></p>
+    <label for="town">Type the number of the town you want to go to</label>
+    <input type="number" id="town" name="town"/>
+    <button type="button" onclick="travelToTown()">Go!</button>
+    <br>
+    <p id="coins-alert"> </p>
+    <p id="key-alert"></p>
+    <button type="button" onclick="getWater()">Get more water</button>
+    <button type="button" onclick="getKey()">Get key</button>
+    <button type="button" onclick="useKey()">Use key</button>
+
+    <script>
+        const randomTown = Math.floor((Math.random() * 6) + 1);
+        console.log(randomTown);
+
+        function getWater(){
+            let coins = document.getElementById("coins-value").innerText;
+            if (coins >= 10){
+                let water = document.getElementById("water-value").innerText;
+                document.getElementById("water-value").innerText = (parseInt(water) + 100);
+                document.getElementById("coins-value").innerText = (parseInt(coins) - 10);
+            } else {
+                document.getElementById("coins-alert").innerText = "No more coins to spend on water.";
+            }
+
+            if (chanceOfWin() === false) {
+                window.location.href = "gameover.html?setting=desert&&book-type=History";
+            }
+        }
+
+        function travelToTown(){
+            let water = document.getElementById("water-value").innerText; 
+            let town = document.querySelector('input[name=town]').value;
+            if (parseInt(town) >= 1 && parseInt(town) <= 6){
+                if (water >= 100){
+                    document.getElementById("water-value").innerText = (parseInt(water) - 100);
+                    document.getElementById("town-alert").innerText = `Went to town number ${town}`;
+                } else {
+                    let coins = document.getElementById("coins-value").innerText;
+                    if (coins < 10) document.getElementById("town-alert").innerText = "No more water to travel.";
+                } 
+            } else alert("Select a town from 1 to 6.");
+            
+            if (chanceOfWin() === false) {
+                window.location.href = "gameover.html?setting=desert&&book-type=History";
+            }
+        }
+
+        function getKey(){
+            let town = document.querySelector('input[name="town"]').value;
+            let keys = document.getElementById('keys-value').innerText;
+            let coins = document.getElementById("coins-value").innerText;
+
+            if (coins >= 5){
+                document.getElementById("coins-value").innerText = (parseInt(coins) - 5);
+                if (town == randomTown && keys !=1){
+                    document.getElementById('keys-value').innerText = '1';
+                    document.getElementById('key-alert').innerText = "You have found the key. Use it to get the map."; 
+                } else {
+                    document.getElementById('key-alert').innerText = "Sorry, we dont have the key. Keep looking.";
+                }
+            } else {
+                document.getElementById('key-alert').innerText = "You don't have enough money for the key.";
+            }
+
+            if (chanceOfWin() === false) {
+                window.location.href = "gameover.html?setting=desert&book-type=History";
+            }
+        }
+
+        function useKey() {
+            let keys = document.getElementById('keys-value').innerText;
+            if (keys == 1){
+                window.location.href = "victory.html?setting=desert&book-type=History";
+            } else document.getElementById('key-alert').innerText = "You don't have a key to use.";
+        }
+
+        function chanceOfWin(){
+            let keys = document.getElementById('keys-value').innerText;
+            let coins = document.getElementById("coins-value").innerText; 
+            let water = document.getElementById("water-value").innerText;
+
+            if (coins < 5){
+                if (keys < 1){
+                    if (water < 100){
+                        return false
+                    }
+                }
+            }
+            return true;
+        }
+
+        
+    </script>
+</body>
+</html>

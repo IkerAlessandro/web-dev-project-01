@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mystery At The Library</title>
+    <link rel="icon" href="assets/icon.jpg" />
+</head>
+<body>
+    <h1>The Fantasy Book</h1>    
+    <hr>
+    <h2>The Forest</h2>
+    <p>
+        The trees talk, they can tell you secrets to get out of here or they lead you to death. <br>
+        You can keep asking for secrets but only one work. <br>
+        Enter the secrets in the box to find out if you survive or die. 
+    </p>
+    <button type="button" onclick="talkToTree()">Talk to trees</button> 
+    <p id="secret-from-tree"></p>
+    <label for="secret">Enter the secret here: </label>
+    <input type="number" name="user-secret-input">
+    <button type="button" onclick="checkFate()">Check fate</button>
+    <br>
+    <img src="assets/trees.jpeg">
+    <script>
+        const secret = Math.floor((Math.random() * 10) + 1);
+        // console.log(secret);
+        function talkToTree(){
+            let message = Math.floor((Math.random() * 10) + 1);
+            document.getElementById("secret-from-tree").innerText = `Secret from tree: ${message}`;
+        }
+
+        function checkFate(){
+            let input = document.querySelector('input[name="user-secret-input"').value;
+            if (input == secret){
+                window.location.href = "victory.html?setting=forest&book-type=Fantasy";
+            } else {
+                window.location.href = "gameover.html?setting=forest&book-type=Fantasy";
+            }
+        }
+    </script>
+</body>
+</html>

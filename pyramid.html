@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mystery At The Library</title>
+    <link rel="icon" href="assets/icon.jpg" />
+</head>
+<body>
+    <h1>The History Book</h1>
+    <hr>
+    <h2>The Pyramids</h2>
+    <p>You have entered to the pyramid. Find a way to get the treauser and survive in the way out.</p>
+    <img src="assets/pyramid-doors.jpeg"><br>
+    <label for="path-selection">Select the way you want to go throuhg:</label>
+    <input id="path-selection" type="number" name="path-selection"/>
+    <button type="button" onclick="selectWay()">Go to selected way</button>
+    <script>
+        function selectWay(){
+            let selection = document.querySelector('input[name="path-selection"]').value;
+            let randomCorrectWay = Math.floor((Math.random() * 3) + 1);
+            if (selection > 3 || selection <= 0) alert("Select a number from 1 to 3");
+            if (selection == randomCorrectWay) window.location.href = "victory.html?setting=pyramid&book-type=History";
+            else window.location.href = "gameover.html?setting=pyramid&book-type=History"
+        }
+    </script>
+</body>

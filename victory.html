@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mystery At The Library</title>
+    <link rel="icon" href="assets/icon.jpg" />
+</head>
+<body>
+    <h1 id="book"></h1>
+    <hr>
+    <p id="setting">You had found your way out of the </p>
+    <img src="assets/victory.gif">
+    <script>
+        let settingValue = new URLSearchParams(location.search).get("setting");
+        let bookTypeValue = new URLSearchParams(location.search).get("book-type");
+        document.getElementById("setting").innerHTML += settingValue + "!";
+        document.getElementById("book").innerHTML = "The " + bookTypeValue + " Book";
+    </script>
+</body>
